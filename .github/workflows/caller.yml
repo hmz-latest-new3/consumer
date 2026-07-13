@@ -1,0 +1,10 @@
+name: caller
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  call:
+    permissions:
+      contents: write
+    uses: hmz-latest-new2/.github/.github/workflows/reusable.yml@main
+    secrets: inherit
